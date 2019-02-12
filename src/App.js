@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import MainView from './MainView'
-import MainSidebar from './MainSidebar'
-import FolderSidebar from './FolderSidebar'
-import NoteView from './NoteView'
-import Header from './Header'
-import store from './store'
+import MainView from './MainView';
+import MainSidebar from './MainSidebar';
+import FolderSidebar from './FolderSidebar';
+import NoteView from './NoteView';
+import Header from './Header';
+import store from './store';
 import './App.css';
 
 class App extends Component {
@@ -14,30 +14,54 @@ class App extends Component {
     return (
       <main className="App">
         <Header />
-        <div className = "sidebar">
-          <Route exact path='/' render={() =>
-              <MainSidebar
-                folders = {this.state.folders}
-              />} 
+        <div className="sidebar">
+          <Route
+            exact
+            path="/"
+            render={() => <MainSidebar folders={this.state.folders} />}
           />
-          {/* <Route path = '/folder/:folderId' component = {MainSidebar} />
-          <Route path = '/note/:noteId' component = {FolderSidebar} /> */}
-        </div> 
+          <Route
+            exact
+            path="/folders/:folderId"
+            render={props => (
+              <MainSidebar match={props.match} folders={this.state.folders} />
+            )}
+          />
+          {
+            //<Route path = '/note/:noteId' component = {FolderSidebar} />}
+          }
+        </div>
 
-        <div>
-          <Route exact path='/' component={MainView} />
-          {/* <Route path='/folder/:folderId' component={MainView} />
-          <Route path='/note/:noteId' component={NoteView} /> */}
-        </div> 
-        
+        <div className="main-view">
+          <Route
+            exact
+            path="/"
+            render={() => <MainView notes={this.state.notes} />}
+          />
+          <Route
+            exact
+            path="/folders/:folderId"
+            render={props => {
+              console.log('1:', props);
+              return (
+                <MainView
+                  match={props.match}
+                  folder={props.match.params.folderId}
+                  notes={this.state.notes.filter(
+                    note => note.folderId === props.match.params.folderId
+                  )}
+                />
+              );
+            }}
+          />
+          {/*<Route path="/note/:noteId" component={NoteView} />*/}
+        </div>
       </main>
     );
   }
 }
 
-
 export default App;
-
 
 /*
 Each route should have a header, main section and a sidebar section
@@ -68,4 +92,3 @@ The note-id will reference an id of one of the notes in state
 The main section should display the currently selected notes name, modified date and content
 The sidebar should the folder of the currently selected note as well as a "back" button.
  */
-

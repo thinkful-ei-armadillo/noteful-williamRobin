@@ -31,3 +31,25 @@
     transform: rotate(360deg);
   }
 }
+
+.sidebar {
+  display: inline-block;
+  width: 30%;
+  left: 0;
+  height: 100%;
+  float: left;
+}
+
+.main-view {
+  display: inline-block;
+  width: 70%;
+  height: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+li.selected {
+  background: aqua;
+}
