@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Note extends Component {
-  
   render() {
     let date = new Date(this.props.date);
-    let dateString =
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    let dateString = date.toDateString();
+    //date.getMonth() + 1 + ' ' + date.getDate() + ',' + date.getFullYear();
 
     return (
-      <li>
-        <h3>
+      <React.Fragment>
+        <h2>
           <Link to={`/notes/${this.props.id}`}>{this.props.name}</Link>
-          <span>{dateString}</span>
-        </h3>
-      </li>
+        </h2>
+        <div>Last Modified: {dateString}</div>
+      </React.Fragment>
     );
   }
 }

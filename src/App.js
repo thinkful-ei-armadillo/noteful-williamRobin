@@ -26,19 +26,20 @@ class App extends Component {
               <MainSidebar match={props.match} folders={this.state.folders} />
             )}
           />
-          <Route 
-            path = '/notes/:noteId' 
+          <Route
+            path="/notes/:noteId"
             render={props => (
-              <FolderSidebar folder={this.state.folders.find((e) => e.id === 
-                (this.state.notes.find((e) => e.id === 
-                  props.match.params.noteId).folderId 
-                  )
+              <FolderSidebar
+                folder={this.state.folders.find(
+                  e =>
+                    e.id ===
+                    this.state.notes.find(
+                      e => e.id === props.match.params.noteId
+                    ).folderId
                 )}
               />
-              
-
-          )} />
-          
+            )}
+          />
         </div>
 
         <div className="main-view">
@@ -51,7 +52,6 @@ class App extends Component {
             exact
             path="/folders/:folderId"
             render={props => {
-              console.log('1:', props);
               return (
                 <MainView
                   match={props.match}
@@ -62,16 +62,17 @@ class App extends Component {
               );
             }}
           />
-          <Route 
-            path="/notes/:noteId" 
+          <Route
+            path="/notes/:noteId"
             render={props => {
               return (
-                <NoteView 
-                  note={this.state.notes.find((e) => e.id ===
-                    props.match.params.noteId)}
+                <NoteView
+                  note={this.state.notes.find(
+                    e => e.id === props.match.params.noteId
+                  )}
                 />
-              ) 
-            }} 
+              );
+            }}
           />
         </div>
       </main>
