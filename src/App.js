@@ -6,15 +6,44 @@ import FolderSidebar from './FolderSidebar';
 import NoteView from './NoteView';
 import Header from './Header';
 import NotefulContext from './NotefulContext';
-import store from './store';
 import './App.css';
 
 class App extends Component {
-  state = store;
+  state = {
+    folders: [],
+    notes: []
+  };
+
+  componentDidMount() {
+    const BASE_URL = `http://localhost:9090`;
+
+    fetch(BASE_URL + '/folders')
+      .then(response => {
+        return response.json();
+      })
+      .then(folders => {
+        this.setState({ folders });
+      });
+
+    fetch(BASE_URL + '/notes')
+      .then(response => {
+        return response.json();
+      })
+      .then(notes => {
+        this.setState({ notes });
+      });
+  }
+
+  deleteNote = noteId => {
+    const newNotes = this.state.notes.filter(note => note.id !== noteId);
+    this.setState({ notes: newNotes });
+  };
+
   render() {
     const contextValue = {
       notes: this.state.notes,
-      folders: this.state.folders
+      folders: this.state.folders,
+      deleteNote: this.deleteNote
     };
 
     return (

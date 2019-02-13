@@ -26,8 +26,3 @@ export default class MainView extends Component {
     return <ul>{this.notesHtml()}</ul>;
   }
 }
-
-MainView.defaultProps = {
-  notes: [],
-  match: null
-};
