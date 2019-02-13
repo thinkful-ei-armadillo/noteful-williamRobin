@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import NotefulContext from './NotefulContext';
 import { Link } from 'react-router-dom';
 
 export default class MainSidebar extends Component {
-  componentDidMount() {}
+  static contextType = NotefulContext;
 
   foldersHtml() {
     let selectedFolder;
-
+    const { folders } = this.context;
     if (this.props.match && this.props.match.params) {
       selectedFolder = this.props.match.params.folderId;
     }
 
-    return this.props.folders.map(folder => {
+    return folders.map(folder => {
       const className = `note-folder ${
         selectedFolder && selectedFolder === folder.id ? 'selected' : ''
       }`;

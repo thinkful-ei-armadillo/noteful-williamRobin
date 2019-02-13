@@ -1,14 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import NotefulContext from './NotefulContext';
 
 export default class FolderSidebar extends Component {
+  static contextType = NotefulContext;
+
   componentDidMount() {}
 
   foldersHtml() {
+    /*folder={this.state.folders.find(
+      e =>
+        e.id ===
+        this.state.notes.find(
+          e => e.id === props.match.params.noteId
+        ).folderId
+    )}*/
+
+    const { notes } = this.context;
+    const { folders } = this.context;
+
+    const folderId = notes.find(e => e.id === this.props.match.params.noteId)
+      .folderId;
+    const folder = folders.find(e => e.id === folderId);
+
     return (
       <div className="folder-sidebar">
-        <Link to={`/folders/${this.props.folder.id}`}>Go back</Link>
-        <p>Current Folder: {this.props.folder.name}</p>
+        <Link to={`/folders/${folder.id}`}>Go back</Link>
+        <p>Current Folder: {folder.name}</p>
       </div>
     );
   }
@@ -16,8 +34,3 @@ export default class FolderSidebar extends Component {
     return <ul>{this.foldersHtml()}</ul>;
   }
 }
-
-FolderSidebar.defaultProps = {
-  folders: [],
-  match: null
-};

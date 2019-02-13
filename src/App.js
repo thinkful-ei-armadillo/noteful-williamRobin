@@ -5,77 +5,91 @@ import MainSidebar from './MainSidebar';
 import FolderSidebar from './FolderSidebar';
 import NoteView from './NoteView';
 import Header from './Header';
+import NotefulContext from './NotefulContext';
 import store from './store';
 import './App.css';
 
 class App extends Component {
   state = store;
   render() {
-    return (
-      <main className="App">
-        <Header />
-        <div className="sidebar">
-          <Route
-            exact
-            path="/"
-            render={() => <MainSidebar folders={this.state.folders} />}
-          />
-          <Route
-            path="/folders/:folderId"
-            render={props => (
-              <MainSidebar match={props.match} folders={this.state.folders} />
-            )}
-          />
-          <Route
-            path="/notes/:noteId"
-            render={props => (
-              <FolderSidebar
-                folder={this.state.folders.find(
-                  e =>
-                    e.id ===
-                    this.state.notes.find(
-                      e => e.id === props.match.params.noteId
-                    ).folderId
-                )}
-              />
-            )}
-          />
-        </div>
+    const contextValue = {
+      notes: this.state.notes,
+      folders: this.state.folders
+    };
 
-        <div className="main-view">
-          <Route
-            exact
-            path="/"
-            render={() => <MainView notes={this.state.notes} />}
-          />
-          <Route
-            exact
-            path="/folders/:folderId"
-            render={props => {
-              return (
-                <MainView
-                  match={props.match}
-                  notes={this.state.notes.filter(
-                    note => note.folderId === props.match.params.folderId
+    return (
+      <NotefulContext.Provider value={contextValue}>
+        <main className="App">
+          <Header />
+          <div className="sidebar">
+            <Route
+              exact
+              path="/"
+              component={MainSidebar}
+              //render={() => <MainSidebar folders={this.state.folders} />}
+            />
+            <Route
+              path="/folders/:folderId"
+              component={MainSidebar}
+              /*render={props => (
+                <MainSidebar match={props.match} folders={this.state.folders} />
+              )}*/
+            />
+            <Route
+              path="/notes/:noteId"
+              component={FolderSidebar}
+              /*render={props => (
+                <FolderSidebar
+                  folder={this.state.folders.find(
+                    e =>
+                      e.id ===
+                      this.state.notes.find(
+                        e => e.id === props.match.params.noteId
+                      ).folderId
                   )}
                 />
-              );
-            }}
-          />
-          <Route
-            path="/notes/:noteId"
-            render={props => {
-              return (
-                <NoteView
-                  note={this.state.notes.find(
-                    e => e.id === props.match.params.noteId
-                  )}
-                />
-              );
-            }}
-          />
-        </div>
-      </main>
+              )}*/
+            />
+          </div>
+
+          <div className="main-view">
+            <Route
+              exact
+              path="/"
+              component={MainView}
+              //render={() => <MainView notes={this.state.notes} />}
+            />
+            <Route
+              exact
+              path="/folders/:folderId"
+              component={MainView}
+              /*render={props => {
+                return (
+                  <MainView
+                    match={props.match}
+                    notes={this.state.notes.filter(
+                      note => note.folderId === props.match.params.folderId
+                    )}
+                  />
+                );
+              }}*/
+            />
+            <Route
+              path="/notes/:noteId"
+              component={NoteView}
+              /*render={props => {
+                return (
+                  <NoteView
+                    note={this.state.notes.find(
+                      e => e.id === props.match.params.noteId
+                    )}
+                  />
+                );
+              }}*/
+            />
+          </div>
+        </main>
+      </NotefulContext.Provider>
     );
   }
 }

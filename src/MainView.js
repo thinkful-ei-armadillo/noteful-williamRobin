@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 import Note from './Note';
-import { Link } from 'react-router-dom';
+import NotefulContext from './NotefulContext';
 
 export default class MainView extends Component {
+  static contextType = NotefulContext;
+
   notesHtml() {
-    return this.props.notes.map(note => {
+    let { notes } = this.context;
+    if (this.props.match.params.folderId !== undefined) {
+      notes = notes.filter(
+        note => note.folderId === this.props.match.params.folderId
+      );
+    }
+
+    return notes.map(note => {
       return (
         <li className="note-item" key={note.id}>
           <Note date={note.modified} name={note.name} id={note.id} />
