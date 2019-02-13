@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Note from './Note';
+import NotefulContext from './NotefulContext';
 
 export default class NoteView extends Component {
+  static contextType = NotefulContext;
+
   render() {
-    const note = this.props.note;
+    // note={this.state.notes.find(
+    //   e => e.id === props.match.params.noteId
+    // )}
+    const { notes } = this.context;
+    const note = notes.find(e => e.id === this.props.match.params.noteId);
+
     return (
       <React.Fragment>
         <div className="note-item">
