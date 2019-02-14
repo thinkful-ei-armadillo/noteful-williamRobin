@@ -16,6 +16,7 @@ export default class AddFolder extends Component {
   };
 
   addFolder = (value) => {
+    console.log(this.props.history)
     const folder = {
       name: value,
     };
@@ -29,7 +30,7 @@ export default class AddFolder extends Component {
       .then(res => res.json())
       .then(resJson => { 
           this.context.addFolder(resJson);
-          this.history.push(`/folders/${resJson.id}`);
+          this.props.history.push(`/folders/${resJson.id}`);
       })
     }
 

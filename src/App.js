@@ -8,6 +8,7 @@ import Header from "./Header";
 import NotefulContext from "./NotefulContext";
 import AddFolder from "./AddFolder";
 import "./App.css";
+import AddNote from "./AddNote";
 
 class App extends Component {
   state = {
@@ -41,9 +42,16 @@ class App extends Component {
   };
 
   addFolder = value => {
+    const newValue = [...this.state.folders, value];
     this.setState({
-      ...this.state.folders, value
-    })
+     folders: newValue
+    });
+  }
+  addNote = value => {
+    const newValue = [...this.state.notes, value];
+    this.setState({
+     notes: newValue
+    });
   }
 
   render() {
@@ -126,6 +134,7 @@ class App extends Component {
               }}*/
             />
             <Route path="/add-folder" component={AddFolder} />
+            <Route path='/add-note' component={AddNote}/>
           </div>
         </main>
       </NotefulContext.Provider>
