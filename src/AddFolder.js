@@ -4,18 +4,25 @@ import NotefulContext from "./NotefulContext";
 export default class AddFolder extends Component {
   static contextType = NotefulContext;
 
-  handleAddFolder = (e) => {
+  constructor(props) {
+    super(props);
+    this.folderInput = React.createRef();
+  }
+
+  handleAddFolder(e) {
     e.preventDefault();
-    console.log(e.current.target);
+    const name = this.folderInput.current.value;
+    console.log('Name: ', name);
   };
 
   render() {
     return (
       <>
         <h2>Create a Folder</h2>
-        <form onSubmit={e => this.handleAddFolder()}>
+        <form onSubmit={e => this.handleAddFolder(e)}>
           <label htmlFor="folder-name">Name: </label>
-          <input name="folder-name" id="folder-name" type="text" />
+          <input name="folder-name" id="folder-name" type="text" 
+          ref={this.folderInput} />
           <button type="submit">Add Folder</button>
         </form>
       </>
