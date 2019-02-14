@@ -12,8 +12,26 @@ export default class AddFolder extends Component {
   handleAddFolder(e) {
     e.preventDefault();
     const name = this.folderInput.current.value;
-    console.log('Name: ', name);
+    this.addFolder(name);
   };
+
+  addFolder = (value) => {
+    const folder = {
+      name: value,
+    };
+    const options = {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      body: JSON.stringify(folder)
+    };
+
+    fetch("http://localhost:9090/folders/", options)
+      .then(res => res.json())
+      .then(resJson => { 
+          this.context.addFolder(resJson);
+          this.history.push(`/folders/${resJson.id}`);
+      })
+    }
 
   render() {
     return (

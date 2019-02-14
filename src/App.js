@@ -40,8 +40,11 @@ class App extends Component {
     this.setState({ notes: newNotes });
   };
 
-  // addFolder = () => 
-
+  addFolder = value => {
+    this.setState({
+      ...this.state.folders, value
+    })
+  }
 
   render() {
     const contextValue = {
@@ -122,8 +125,7 @@ class App extends Component {
                 );
               }}*/
             />
-            <Route path="/add-folder" 
-            component={AddFolder} />
+            <Route path="/add-folder" component={AddFolder} />
           </div>
         </main>
       </NotefulContext.Provider>
