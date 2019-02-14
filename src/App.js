@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import MainView from './MainView';
-import MainSidebar from './MainSidebar';
-import FolderSidebar from './FolderSidebar';
-import NoteView from './NoteView';
-import Header from './Header';
-import NotefulContext from './NotefulContext';
-import './App.css';
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import MainView from "./MainView";
+import MainSidebar from "./MainSidebar";
+import FolderSidebar from "./FolderSidebar";
+import NoteView from "./NoteView";
+import Header from "./Header";
+import NotefulContext from "./NotefulContext";
+import AddFolder from "./AddFolder";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -17,7 +18,7 @@ class App extends Component {
   componentDidMount() {
     const BASE_URL = `http://localhost:9090`;
 
-    fetch(BASE_URL + '/folders')
+    fetch(BASE_URL + "/folders")
       .then(response => {
         return response.json();
       })
@@ -25,7 +26,7 @@ class App extends Component {
         this.setState({ folders });
       });
 
-    fetch(BASE_URL + '/notes')
+    fetch(BASE_URL + "/notes")
       .then(response => {
         return response.json();
       })
@@ -39,11 +40,16 @@ class App extends Component {
     this.setState({ notes: newNotes });
   };
 
+  // addFolder = () => 
+
+
   render() {
     const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
-      deleteNote: this.deleteNote
+      deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
     };
 
     return (
@@ -116,6 +122,8 @@ class App extends Component {
                 );
               }}*/
             />
+            <Route path="/add-folder" 
+            component={AddFolder} />
           </div>
         </main>
       </NotefulContext.Provider>

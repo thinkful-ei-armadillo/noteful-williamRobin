@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import NotefulContext from './NotefulContext';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import NotefulContext from "./NotefulContext";
+import { Link } from "react-router-dom";
 
 export default class MainSidebar extends Component {
   static contextType = NotefulContext;
@@ -14,7 +14,7 @@ export default class MainSidebar extends Component {
 
     return folders.map(folder => {
       const className = `note-folder ${
-        selectedFolder && selectedFolder === folder.id ? 'selected' : ''
+        selectedFolder && selectedFolder === folder.id ? "selected" : ""
       }`;
 
       return (
@@ -25,7 +25,14 @@ export default class MainSidebar extends Component {
     });
   }
   render() {
-    return <ul>{this.foldersHtml()}</ul>;
+    return (
+      <>
+        <ul>{this.foldersHtml()}</ul>
+        <Link to={"/add-folder"}>
+          <button>Add Folder</button>
+        </Link>
+      </>
+    );
   }
 }
 
